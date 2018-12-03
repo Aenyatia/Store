@@ -38,5 +38,32 @@ namespace Store.Web.Services
 		{
 			return Movies.SingleOrDefault(m => m.Id == movieId);
 		}
+
+		public Movie CreateMovie(string commandName, byte commandGenreId, DateTime commandReleaseDate, int commandNumberInStock)
+		{
+			var movie = new Movie
+			{
+				Id = Movies.Count + 1,
+				Name = commandName,
+				Release = commandReleaseDate,
+				GenreId = commandGenreId,
+				AddedAt = DateTime.Now,
+				NumberInStock = commandNumberInStock
+			};
+
+			Movies.Add(movie);
+
+			return movie;
+		}
+
+		public void UpdateMovie(int movieId, string name, byte genreId, DateTime releaseDate, int numberInStock)
+		{
+			var movie = Movies.Single(m => m.Id == movieId);
+
+			movie.Name = name;
+			movie.GenreId = genreId;
+			movie.Release = releaseDate;
+			movie.NumberInStock = numberInStock;
+		}
 	}
 }
