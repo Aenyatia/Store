@@ -1,23 +1,24 @@
-﻿using System;
+﻿using Store.Web.Validators;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Store.Web.Commands
 {
 	public class UpdateCustomer
 	{
-		public int Id { get; set; }
-
 		[Required]
 		[StringLength(255)]
 		public string Name { get; set; }
 
-		[Display(Name = "Date of Birth")]
+		[EightteenYears]
+		[PastDate]
 		public DateTime? Birthday { get; set; }
 
 		[Required]
 		[Display(Name = "Membership Type")]
-		public int MembershipTypeId { get; set; }
+		public byte MembershipTypeId { get; set; }
 
+		[Required]
 		public bool IsNewsLetterSubscriber { get; set; }
 	}
 }

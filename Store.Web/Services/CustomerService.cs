@@ -1,4 +1,7 @@
-﻿using Store.Core;
+﻿using AutoMapper;
+using Store.Core;
+using Store.Web.Commands;
+using Store.Web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +10,8 @@ namespace Store.Web.Services
 {
 	public class CustomerService
 	{
+		private readonly IMapper _mapper;
+
 		private static readonly ISet<Customer> Customers = new HashSet<Customer>
 		{
 			new Customer
@@ -41,40 +46,54 @@ namespace Store.Web.Services
 			}
 		};
 
-		public IEnumerable<Customer> GetCustomers()
+		public CustomerService(IMapper mapper)
 		{
-			return Customers;
+			_mapper = mapper;
 		}
 
-		public Customer GetCustomerById(int customerId)
+		public IEnumerable<CustomerDto> GetCustomers()
 		{
-			return Customers.SingleOrDefault(c => c.Id == customerId);
+			return _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(Customers);
 		}
 
-		public Customer CreateCustomer(string name, DateTime? birthday, int membershipTypeId, bool isSubscriber)
+		public CustomerDto GetCustomerById(int customerId)
+		{
+			var customer = Customers.SingleOrDefault(c => c.Id == customerId);
+
+			return _mapper.Map<Customer, CustomerDto>(customer);
+		}
+
+		public CustomerDto CreateCustomer(CreateCustomer command)
 		{
 			var customer = new Customer
 			{
 				Id = Customers.Count + 1,
-				Name = name,
-				Birthday = birthday,
-				MembershipTypeId = membershipTypeId,
-				IsNewsLetterSubscriber = isSubscriber
+				Name = command.Name,
+				Birthday = command.Birthday,
+				MembershipTypeId = command.MembershipTypeId,
+				IsNewsLetterSubscriber = command.IsNewsLetterSubscriber
 			};
 
 			Customers.Add(customer);
 
-			return customer;
+			return _mapper.Map<Customer, CustomerDto>(customer);
 		}
 
-		public void UpdateCustomer(int customerId, string name, DateTime? birthday, int membershipTypeId, bool isSubscriber)
+		public void UpdateCustomer(int customerId, UpdateCustomer command)
 		{
 			var customer = Customers.Single(c => c.Id == customerId);
 
-			customer.Name = name;
-			customer.Birthday = birthday;
-			customer.MembershipTypeId = membershipTypeId;
-			customer.IsNewsLetterSubscriber = isSubscriber;
+			customer.Name = command.Name;
+			customer.Birthday = command.Birthday;
+			customer.MembershipTypeId = command.MembershipTypeId;
+			customer.IsNewsLetterSubscriber = command.IsNewsLetterSubscriber;
+		}
+
+		public void DeleteCustomer(int customerId)
+		{
+			var customer = Customers.Single(c => c.Id == customerId);
+
+			Customers.Remove(customer);
 		}
 	}
 }

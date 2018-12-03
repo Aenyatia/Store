@@ -56,10 +56,8 @@ namespace Store.Web.Services
 			return movie;
 		}
 
-		public void UpdateMovie(int movieId, string name, byte genreId, DateTime releaseDate, int numberInStock)
+		public void UpdateMovie(Movie movie, string name, byte genreId, DateTime releaseDate, int numberInStock)
 		{
-			var movie = Movies.Single(m => m.Id == movieId);
-
 			movie.Name = name;
 			movie.GenreId = genreId;
 			movie.Release = releaseDate;

@@ -43,11 +43,16 @@ namespace Store.Web.Controllers
 			return CreatedAtAction("Get", new { movieId = movie.Id }, movie);
 		}
 
-		[HttpPut]
-		public IActionResult Put([FromBody] UpdateMovie command)
+		[HttpPut("movieId")]
+		public IActionResult Put(int movieId, [FromBody] UpdateMovie command)
 		{
+			var movie = _movieService.GetMovieById(movieId);
+
+			if (movie == null)
+				return NoContent();
+
 			_movieService
-				.UpdateMovie(command.Id, command.Name, command.GenreId, command.ReleaseDate, command.NumberInStock);
+				.UpdateMovie(movie, command.Name, command.GenreId, command.ReleaseDate, command.NumberInStock);
 
 			return NoContent();
 		}

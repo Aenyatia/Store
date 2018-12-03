@@ -37,17 +37,23 @@ namespace Store.Web.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody] CreateCustomer command)
 		{
-			var customer = _customerService
-				.CreateCustomer(command.Name, command.Birthday, command.MembershipTypeId, command.IsNewsLetterSubscriber);
+			var customer = _customerService.CreateCustomer(command);
 
 			return CreatedAtAction("Get", new { customerId = customer.Id }, customer);
 		}
 
-		[HttpPut]
-		public IActionResult Put([FromBody] UpdateCustomer command)
+		[HttpPut("{customerId}")]
+		public IActionResult Put(int customerId, [FromBody] UpdateCustomer command)
 		{
-			_customerService
-				.UpdateCustomer(command.Id, command.Name, command.Birthday, command.MembershipTypeId, command.IsNewsLetterSubscriber);
+			_customerService.UpdateCustomer(customerId, command);
+
+			return NoContent();
+		}
+
+		[HttpDelete("{customerId}")]
+		public IActionResult Delete(int customerId)
+		{
+			_customerService.DeleteCustomer(customerId);
 
 			return NoContent();
 		}

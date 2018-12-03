@@ -18,6 +18,7 @@ namespace Store.Web.Commands
 		public DateTime ReleaseDate { get; set; }
 
 		[Required]
+		[Range(1, 20)]
 		public int NumberInStock { get; set; }
 	}
 }

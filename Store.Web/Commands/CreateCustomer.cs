@@ -10,13 +10,13 @@ namespace Store.Web.Commands
 		[StringLength(255)]
 		public string Name { get; set; }
 
-		[Display(Name = "Date of Birth")]
 		[EightteenYears]
+		[PastDate]
 		public DateTime? Birthday { get; set; }
 
 		[Required]
 		[Display(Name = "Membership Type")]
-		public int MembershipTypeId { get; set; }
+		public byte MembershipTypeId { get; set; }
 
 		[Required]
 		public bool IsNewsLetterSubscriber { get; set; }
