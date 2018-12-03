@@ -1,6 +1,7 @@
 ﻿using System;
 using Store.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Store.Web.Services
 {
@@ -43,6 +44,11 @@ namespace Store.Web.Services
 		public IEnumerable<Customer> GetCustomers()
 		{
 			return Customers;
+		}
+
+		public Customer GetCustomerById(int customerId)
+		{
+			return Customers.SingleOrDefault(c => c.Id == customerId);
 		}
 	}
 }

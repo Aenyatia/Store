@@ -21,5 +21,16 @@ namespace Store.Web.Controllers
 
 			return Ok(customers);
 		}
+
+		[HttpGet("{customerId}")]
+		public IActionResult Get(int customerId)
+		{
+			var customer = _customerService.GetCustomerById(customerId);
+
+			if (customer == null)
+				return NotFound();
+
+			return Ok(customer);
+		}
 	}
 }
