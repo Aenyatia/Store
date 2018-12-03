@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Store.Core;
+using System;
 
-namespace Store.Core
+namespace Store.Web.Dtos
 {
-	public class Customer
+	public class CustomerDto
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public DateTime? Birthday { get; set; }
-		public int MembershipTypeId { get; set; }
 		public MembershipType MembershipType { get; set; }
 		public bool IsNewsLetterSubscriber { get; set; }
 	}

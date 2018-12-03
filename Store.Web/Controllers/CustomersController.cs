@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Web.Commands;
 using Store.Web.Services;
 
 namespace Store.Web.Controllers
@@ -31,6 +32,18 @@ namespace Store.Web.Controllers
 				return NotFound();
 
 			return Ok(customer);
+		}
+
+		[HttpPost]
+		public IActionResult Post([FromBody] CreateCustomer command)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			var customer = _customerService
+				.CreateCustomer(command.Name, command.Birthday, command.MembershipTypeId, command.IsNewsLetterSubscriber);
+
+			return CreatedAtAction("Get", new { customerId = customer.Id }, customer);
 		}
 	}
 }

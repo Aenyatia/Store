@@ -1,5 +1,5 @@
-﻿using System;
-using Store.Core;
+﻿using Store.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,6 +49,22 @@ namespace Store.Web.Services
 		public Customer GetCustomerById(int customerId)
 		{
 			return Customers.SingleOrDefault(c => c.Id == customerId);
+		}
+
+		public Customer CreateCustomer(string name, DateTime? birthday, int membershipTypeId, bool isSubscriber)
+		{
+			var customer = new Customer
+			{
+				Id = Customers.Count + 1,
+				Name = name,
+				Birthday = birthday,
+				MembershipTypeId = membershipTypeId,
+				IsNewsLetterSubscriber = isSubscriber
+			};
+
+			Customers.Add(customer);
+
+			return customer;
 		}
 	}
 }
