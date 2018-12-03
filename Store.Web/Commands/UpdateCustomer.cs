@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Store.Web.Commands
 {
-	public class CreateCustomer
+	public class UpdateCustomer
 	{
+		public int Id { get; set; }
+
 		[Required]
 		[StringLength(255)]
 		public string Name { get; set; }

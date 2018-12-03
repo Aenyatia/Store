@@ -66,5 +66,15 @@ namespace Store.Web.Services
 
 			return customer;
 		}
+
+		public void UpdateCustomer(int customerId, string name, DateTime? birthday, int membershipTypeId, bool isSubscriber)
+		{
+			var customer = Customers.Single(c => c.Id == customerId);
+
+			customer.Name = name;
+			customer.Birthday = birthday;
+			customer.MembershipTypeId = membershipTypeId;
+			customer.IsNewsLetterSubscriber = isSubscriber;
+		}
 	}
 }

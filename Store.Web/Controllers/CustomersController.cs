@@ -37,13 +37,19 @@ namespace Store.Web.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody] CreateCustomer command)
 		{
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-
 			var customer = _customerService
 				.CreateCustomer(command.Name, command.Birthday, command.MembershipTypeId, command.IsNewsLetterSubscriber);
 
 			return CreatedAtAction("Get", new { customerId = customer.Id }, customer);
+		}
+
+		[HttpPut]
+		public IActionResult Put([FromBody] UpdateCustomer command)
+		{
+			_customerService
+				.UpdateCustomer(command.Id, command.Name, command.Birthday, command.MembershipTypeId, command.IsNewsLetterSubscriber);
+
+			return NoContent();
 		}
 	}
 }
