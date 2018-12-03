@@ -43,7 +43,7 @@ namespace Store.Web.Controllers
 			return CreatedAtAction("Get", new { movieId = movie.Id }, movie);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		public IActionResult Put([FromBody] UpdateMovie command)
 		{
 			_movieService
