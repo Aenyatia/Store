@@ -12,13 +12,16 @@ namespace Store.Web.Commands
 
 		[Required]
 		[EnumDataType(typeof(Genre))]
+		[Display(Name = "Genre")]
 		public byte GenreId { get; set; }
 
 		[Required]
+		[Display(Name = "Relese Date")]
 		public DateTime ReleaseDate { get; set; }
 
 		[Required]
 		[Range(1, 20)]
+		[Display(Name = "Number in Stock")]
 		public int NumberInStock { get; set; }
 	}
 }

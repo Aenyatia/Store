@@ -27,7 +27,7 @@ namespace Store.Web.Services
 					DurationInMonths = 12,
 					SignUpFee = 300
 				},
-				IsNewsLetterSubscriber = true
+				IsNewsletterSubscriber = true
 			},
 			new Customer
 			{
@@ -42,7 +42,7 @@ namespace Store.Web.Services
 					DurationInMonths = 1,
 					SignUpFee = 30
 				},
-				IsNewsLetterSubscriber = false
+				IsNewsletterSubscriber = false
 			}
 		};
 
@@ -71,7 +71,7 @@ namespace Store.Web.Services
 				Name = command.Name,
 				Birthday = command.Birthday,
 				MembershipTypeId = command.MembershipTypeId,
-				IsNewsLetterSubscriber = command.IsNewsLetterSubscriber
+				IsNewsletterSubscriber = command.IsNewsLetterSubscriber
 			};
 
 			Customers.Add(customer);
@@ -86,7 +86,7 @@ namespace Store.Web.Services
 			customer.Name = command.Name;
 			customer.Birthday = command.Birthday;
 			customer.MembershipTypeId = command.MembershipTypeId;
-			customer.IsNewsLetterSubscriber = command.IsNewsLetterSubscriber;
+			customer.IsNewsletterSubscriber = command.IsNewsLetterSubscriber;
 		}
 
 		public void DeleteCustomer(int customerId)

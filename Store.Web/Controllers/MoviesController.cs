@@ -18,41 +18,42 @@ namespace Store.Web.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			var movies = _movieService.GetMovies();
+			var movieDtos = _movieService.GetMovies();
 
-			return Ok(movies);
+			return Ok(movieDtos);
 		}
 
 		[HttpGet("{movieId}")]
 		public IActionResult Get(int movieId)
 		{
-			var movie = _movieService.GetMovieById(movieId);
+			var movieDto = _movieService.GetMovieById(movieId);
 
-			if (movie == null)
+			if (movieDto == null)
 				return NotFound();
 
-			return Ok(movie);
+			return Ok(movieDto);
 		}
 
 		[HttpPost]
 		public IActionResult Post([FromBody] CreateMovie command)
 		{
-			var movie = _movieService
-				.CreateMovie(command.Name, command.GenreId, command.ReleaseDate, command.NumberInStock);
+			var movieDto = _movieService.CreateMovie(command);
 
-			return CreatedAtAction("Get", new { movieId = movie.Id }, movie);
+			return CreatedAtAction("Get", new { movieId = movieDto.Id }, movieDto);
 		}
 
-		[HttpPut("movieId")]
+		[HttpPut("{movieId}")]
 		public IActionResult Put(int movieId, [FromBody] UpdateMovie command)
 		{
-			var movie = _movieService.GetMovieById(movieId);
+			_movieService.UpdateMovie(movieId, command);
 
-			if (movie == null)
-				return NoContent();
+			return NoContent();
+		}
 
-			_movieService
-				.UpdateMovie(movie, command.Name, command.GenreId, command.ReleaseDate, command.NumberInStock);
+		[HttpDelete("{movieId}")]
+		public IActionResult Delete(int movieId)
+		{
+			_movieService.DeleteMovie(movieId);
 
 			return NoContent();
 		}

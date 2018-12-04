@@ -6,10 +6,10 @@ namespace Store.Core
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public bool IsNewsLetterSubscriber { get; set; }
+		public bool IsNewsletterSubscriber { get; set; }
 		public DateTime? Birthday { get; set; }
 
-		public int MembershipTypeId { get; set; }
+		public byte MembershipTypeId { get; set; }
 		public MembershipType MembershipType { get; set; }
 	}
 }

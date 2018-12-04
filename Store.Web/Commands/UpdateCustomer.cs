@@ -19,6 +19,7 @@ namespace Store.Web.Commands
 		public byte MembershipTypeId { get; set; }
 
 		[Required]
+		[Display(Name = "Subscribe newsletter?")]
 		public bool IsNewsLetterSubscriber { get; set; }
 	}
 }

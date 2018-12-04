@@ -1,4 +1,7 @@
-﻿using Store.Core;
+﻿using AutoMapper;
+using Store.Core;
+using Store.Web.Commands;
+using Store.Web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,61 +10,82 @@ namespace Store.Web.Services
 {
 	public class MovieService
 	{
+		private readonly IMapper _mapper;
+
 		private static readonly ISet<Movie> Movies = new HashSet<Movie>
 		{
 			new Movie
 			{
 				Id = 1,
-				Name = "Hangover",
-				AddedAt = DateTime.Now,
-				Genre = Genre.Action,
+				Name = "Shrek",
+				ReleaseDate = new DateTime(2000, 10, 12),
 				NumberInStock = 10,
-				Release = DateTime.Now.AddDays(-100)
+				AddedAt = DateTime.Now,
+				GenreId = (byte)Genre.Fantasy,
+				Genre = Genre.Fantasy
 			},
 			new Movie
 			{
 				Id = 2,
-				Name = "Die Hard",
+				Name = "Wall-e",
+				ReleaseDate = new DateTime(2010, 06, 13),
+				NumberInStock = 3,
 				AddedAt = DateTime.Now,
-				Genre = Genre.Fantasy,
-				NumberInStock = 5,
-				Release = DateTime.Now.AddDays(-50)
+				GenreId = (byte)Genre.Action,
+				Genre = Genre.Action
 			}
 		};
 
-		public IEnumerable<Movie> GetMovies()
+		public MovieService(IMapper mapper)
 		{
-			return Movies;
+			_mapper = mapper;
 		}
 
-		public Movie GetMovieById(int movieId)
+		public IEnumerable<MovieDto> GetMovies()
 		{
-			return Movies.SingleOrDefault(m => m.Id == movieId);
+			return _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieDto>>(Movies);
 		}
 
-		public Movie CreateMovie(string commandName, byte commandGenreId, DateTime commandReleaseDate, int commandNumberInStock)
+		public MovieDto GetMovieById(int movieId)
+		{
+			var movie = Movies.SingleOrDefault(c => c.Id == movieId);
+
+			return _mapper.Map<Movie, MovieDto>(movie);
+		}
+
+		public MovieDto CreateMovie(CreateMovie command)
 		{
 			var movie = new Movie
 			{
 				Id = Movies.Count + 1,
-				Name = commandName,
-				Release = commandReleaseDate,
-				GenreId = commandGenreId,
-				AddedAt = DateTime.Now,
-				NumberInStock = commandNumberInStock
+				Name = command.Name,
+				GenreId = command.GenreId,
+				NumberInStock = command.NumberInStock,
+				ReleaseDate = command.ReleaseDate,
+				AddedAt = DateTime.Now
 			};
 
 			Movies.Add(movie);
 
-			return movie;
+			return _mapper.Map<Movie, MovieDto>(movie);
 		}
 
-		public void UpdateMovie(Movie movie, string name, byte genreId, DateTime releaseDate, int numberInStock)
+		public void UpdateMovie(int movieId, UpdateMovie command)
 		{
-			movie.Name = name;
-			movie.GenreId = genreId;
-			movie.Release = releaseDate;
-			movie.NumberInStock = numberInStock;
+			var movie = Movies.Single(c => c.Id == movieId);
+
+			movie.Name = command.Name;
+			movie.GenreId = command.GenreId;
+			movie.NumberInStock = command.NumberInStock;
+			movie.ReleaseDate = command.ReleaseDate;
+			movie.UpdatedAt = DateTime.Now;
+		}
+
+		public void DeleteMovie(int movieId)
+		{
+			var movie = Movies.Single(c => c.Id == movieId);
+
+			Movies.Remove(movie);
 		}
 	}
 }

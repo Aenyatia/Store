@@ -10,5 +10,8 @@
 
 		public static byte Undefine = 0;
 		public static byte PayAsYouGo = 1;
+		public static byte Monthly = 2;
+		public static byte Quarterly = 3;
+		public static byte Annual = 4;
 	}
 }

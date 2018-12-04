@@ -11,6 +11,7 @@ namespace Store.Web.Mappers
 			{
 				cfg.CreateMap<Customer, CustomerDto>();
 				cfg.CreateMap<Movie, MovieDto>();
+				cfg.CreateMap<MembershipType, MembershipTypeDto>();
 			}).CreateMapper();
 	}
 }

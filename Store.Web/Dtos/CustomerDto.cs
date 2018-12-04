@@ -1,5 +1,4 @@
-﻿using Store.Core;
-using System;
+﻿using System;
 
 namespace Store.Web.Dtos
 {
@@ -8,7 +7,7 @@ namespace Store.Web.Dtos
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public DateTime? Birthday { get; set; }
-		public MembershipType MembershipType { get; set; }
+		public MembershipTypeDto MembershipType { get; set; }
 		public bool IsNewsLetterSubscriber { get; set; }
 	}
 }

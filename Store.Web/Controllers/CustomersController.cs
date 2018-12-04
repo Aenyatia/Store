@@ -18,28 +18,28 @@ namespace Store.Web.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			var customers = _customerService.GetCustomers();
+			var customerDtos = _customerService.GetCustomers();
 
-			return Ok(customers);
+			return Ok(customerDtos);
 		}
 
 		[HttpGet("{customerId}")]
 		public IActionResult Get(int customerId)
 		{
-			var customer = _customerService.GetCustomerById(customerId);
+			var customerDto = _customerService.GetCustomerById(customerId);
 
-			if (customer == null)
+			if (customerDto == null)
 				return NotFound();
 
-			return Ok(customer);
+			return Ok(customerDto);
 		}
 
 		[HttpPost]
 		public IActionResult Post([FromBody] CreateCustomer command)
 		{
-			var customer = _customerService.CreateCustomer(command);
+			var customerDto = _customerService.CreateCustomer(command);
 
-			return CreatedAtAction("Get", new { customerId = customer.Id }, customer);
+			return CreatedAtAction("Get", new { customerId = customerDto.Id }, customerDto);
 		}
 
 		[HttpPut("{customerId}")]
